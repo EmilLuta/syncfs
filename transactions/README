@@ -1,0 +1,44 @@
+Hello :)
+
+This is where we record and bundle up the changes so they can be sent to their peers. There are a few approaches to this
+with various pros and cons.
+
+rsync:
+    + Efficient bandwidth
+    + Easy to send changes in existing files
+    - Requires separate handling of deleted files etc
+    - No transaction history
+
+git:
+    + Efficient bandwidth
+    + Easy to send changes in existing files and metadata
+    - Requires a git repository
+    - Requires separate handling of deleted files, empty folders
+    - Transactions but not necessarily history
+
+diff:
+    + Efficient bandwidth
+    + Easy to bundle changes
+    + Patch is the transaction
+    - Manual sending to peers via sockets
+    - Problematic with binary or large files
+
+tar:
+    + Easy to bundle files
+    + The archive is the transaction
+    - Manual sending to peers via sockets
+    - Requires separate handling of deleted files
+
+A common issue is tracking changes that X solution does not. It seems to me that a log file of sorts would be useful,
+where metadata, deletions etc are added, and replayed on the client. This can also solve the git transaction history
+by recording the object hash order.
+
+The ultimate goal, as I see it, is a log file of metadata changes, and a binary blob of changes. With some smart
+implementation, this could also be used to provide a "snapshot view" of the filesystem with transactions omitted
+(in case of conflicts causing corruption). This is why I want the File and Folder classes, so some block level smartness
+can be abstracted away.
+
+In the short term, I don't have an answer. I'm going to work towards the ultimate goal, and someone else can implement
+an alternative or workaround in the meantime.
+
+-- Mark

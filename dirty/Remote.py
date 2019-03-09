@@ -1,11 +1,12 @@
-import comms.Client
+from comms import Client
+
 
 class Remote:
     list_by_folder = dict()
     list_by_peer = dict()
 
     def set(self, folder, peer):
-        # TODO Do we need mutexes over all this stuff?
+        # TODO Do we need mutexes over all this stuff? - I think so
         # if name in self.list and self.list[name][peer] != peer:
             # OMGWTFBBQ The dirty flag has failed us.
         if folder not in self.list_by_folder:
@@ -27,4 +28,4 @@ class Remote:
     def flush(self, folder):
         for peer in self.list_by_folder[folder]:
             # TODO Make this sensible, and work
-            comms.Client.send('flush', folder)
+            Client.send('flush', folder)

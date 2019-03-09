@@ -7,14 +7,14 @@ TODO Later: Will need a unique descriptor table
 """
 
 
-import logging
 import os
 
 from errno import EACCES
 from os.path import realpath
 from threading import Lock
 
-from fuse import FUSE, FuseOSError, Operations, LoggingMixIn
+from fuse import FuseOSError, LoggingMixIn, Operations
+
 
 class Fuse(LoggingMixIn, Operations):
     def __init__(self, root):

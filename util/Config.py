@@ -13,16 +13,20 @@ Writes ~/.syncfs.conf
 
 """
 
-import configparser.ConfigParser
+from configparser import ConfigParser
+
 
 class Config:
     config_global = None
     config_local = None
 
     def __init__(self):
-        config = configparser.ConfigParser()
+        config = ConfigParser()
         self.config_global = config.read('/etc/syncfs.conf')
-        self.config_local = config.read('~/.syncfs.conf') # TODO ~ probably doesn't work
+        # TODO ~ probably doesn't work
+        self.config_local = config.read('~/.syncfs.conf')
+        # This most likely should read a bunch of dictionaries that you could merge.
+        # Merging should be done based on priority?
 
     def get(self, section, name, default):
         self.config_global.get(
